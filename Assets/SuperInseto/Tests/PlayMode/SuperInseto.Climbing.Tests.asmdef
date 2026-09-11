@@ -1,0 +1,6 @@
+{
+  "name": "SuperInseto.Climbing.Tests",
+  "references": ["SuperInseto.Movement"],
+  "optionalUnityReferences": ["TestAssemblies"],
+  "defineConstraints": ["UNITY_INCLUDE_TESTS"]
+}

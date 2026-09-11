@@ -14,10 +14,15 @@ namespace SuperInseto
 
         public bool Find(Vector3 direction, out RaycastHit wall, float extraDistance = 0f)
         {
+            return FindAt(transform.position, direction, out wall, extraDistance);
+        }
+
+        public bool FindAt(Vector3 feet, Vector3 direction, out RaycastHit wall, float extraDistance = 0f)
+        {
             wall = default;
             direction = Vector3.ProjectOnPlane(direction, Vector3.up).normalized;
             if (direction.sqrMagnitude < 0.5f) return false;
-            Vector3 origin = transform.position + Vector3.up * (body.height * 0.6f);
+            Vector3 origin = feet + Vector3.up * (body.height * 0.6f);
             float reach = body.radius + detectionDistance + extraDistance;
             // Broad probe plus a centre ray: never attach through another collider or
             // keep climbing on an edge detected only by the sphere's rounded rim.

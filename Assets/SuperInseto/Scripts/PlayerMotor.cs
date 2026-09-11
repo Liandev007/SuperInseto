@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace SuperInseto
 {
-    public enum MovementState { Grounded, Airborne, Crouched, WallAttached, WallClimbing }
+    public enum MovementState { Grounded, Airborne, Crouched, WallAttached, WallClimbing, Mantling }
 
     [RequireComponent(typeof(CharacterController), typeof(PlayerInputReader), typeof(WallClimber))]
     public sealed class PlayerMotor : MonoBehaviour
@@ -64,7 +64,8 @@ namespace SuperInseto
                 verticalVelocity = 0f;
                 if (climber.Attached)
                 {
-                    state = climber.Moving ? MovementState.WallClimbing : MovementState.WallAttached;
+                    state = climber.Mantling ? MovementState.Mantling
+                        : climber.Moving ? MovementState.WallClimbing : MovementState.WallAttached;
                     return;
                 }
             }

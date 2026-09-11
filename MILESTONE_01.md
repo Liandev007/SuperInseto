@@ -23,8 +23,13 @@ Todas as referências estão na cena; não é preciso criar objetos nem executar
    Inspecionar `PlayerMotor > State`: WallAttached parado, WallClimbing em movimento.
 5. E/Space/Ctrl solta; a gravidade retorna e o personagem pode continuar andando.
    Repetir no ar, junto ao chão e várias vezes. S até tocar o chão deve soltar sozinho.
-6. Sair pela lateral/topo da superfície ou desabilitar seu `ClimbableSurface` durante
-   Play deve soltar. Paredes cinzas, tetos e faces horizontais não aceitam aderência.
+6. Segurar W até o topo das paredes BAIXA/ALTA deve iniciar `Mantling`, levantar a
+   cápsula por fora da parede, avançar sobre a borda e terminar em `Grounded`.
+   Continuar andando sobre a plataforma. Na parede `Borda BLOQUEADA` (à direita da
+   saída do corredor), segurar W deve manter a aderência abaixo do teto: sem cair
+   nem atravessar. Testar S e E/Space/Ctrl nessa posição. Remover o teto durante Play
+   deve permitir nova tentativa. Sair pela lateral ou desabilitar `ClimbableSurface`
+   ainda solta. Paredes cinzas, tetos e faces horizontais não aceitam aderência inicial.
 7. Orbitar câmera contra paredes, corredor, teto baixo e durante escalada; verificar
    obstrução em vários ângulos. Esc e retorno de foco não devem deixar entradas presas.
 8. As escadas permitem alcançar plataformas e passagem elevada para testar quedas.
@@ -39,8 +44,11 @@ O player usa a layer interna Ignore Raycast (2); máscaras de consultas excluem 
 mas o CharacterController continua colidindo com a geometria Default.
 
 Superfícies deste protótipo são estáticas, verticais e marcadas com `ClimbableSurface`.
-Não há transposição automática de borda, escalada de teto nem transferência entre cantos.
-Perder a face escalável solta o personagem; use as escadas para chegar às plataformas.
+`LedgeMantle` valida apoio da cápsula, espaço em pé e os dois segmentos do trajeto;
+o CharacterController permanece habilitado durante a transição. Altura de busca,
+profundidade, margem, elevação e duração são ajustáveis no Inspector. Uma borda
+inválida bloqueia somente a subida; não há escalada de teto nem transferência entre
+cantos. Obstrução surgindo durante um mantle cancela a transição e devolve a gravidade.
 Os materiais simples recebem cor ao entrar em Play; a cena já contém toda a geometria.
 
 Editor Unity e compilador C# não estão disponíveis no ambiente de implementação.
@@ -48,5 +56,9 @@ Referências/estrutura foram verificadas estaticamente; compilação real, colis
 sensação de câmera e transições em Play precisam da verificação acima. Não há alegação
 de teste de gameplay aprovado sem executar o Editor.
 
-Próximo milestone sugerido: validar/ajustar o controller no Unity e adicionar transposição
-simples de bordas, caso aprovada. Nenhum sistema posterior foi implementado.
+Testes de regressão: Window > General > Test Runner > PlayMode > Run All.
+`LedgeMantleTests` cobre chegada ao chão superior sem salto brusco, continuidade do
+deslocamento, teto bloqueado, descida e soltura durante aderência/mantle. Esses testes
+foram adicionados, mas não executados aqui por ausência do Unity Editor.
+
+Milestone 1 continua aguardando validação local; nenhum milestone posterior foi iniciado.

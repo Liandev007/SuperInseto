@@ -1,0 +1,5 @@
+{
+  "name": "SuperInseto.Movement",
+  "rootNamespace": "SuperInseto",
+  "references": ["Unity.InputSystem"]
+}
