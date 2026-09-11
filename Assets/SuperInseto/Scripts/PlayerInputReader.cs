@@ -15,7 +15,10 @@ namespace SuperInseto
         public bool Walk => Captured && walk.IsPressed();
         public bool Crouch => Captured && crouch.IsPressed();
         public bool JumpPressed => Captured && jump.WasPressedThisFrame();
-        public bool ClimbPressed => Captured && climb.WasPressedThisFrame();
+        int interactionConsumedFrame = -1;
+        public bool InteractPressed => Captured && climb.WasPressedThisFrame();
+        public bool ClimbPressed => InteractPressed && interactionConsumedFrame != Time.frameCount;
+        public void ConsumeInteraction() { interactionConsumedFrame = Time.frameCount; }
         public bool Captured => Cursor.lockState == CursorLockMode.Locked;
 
         void Awake()
