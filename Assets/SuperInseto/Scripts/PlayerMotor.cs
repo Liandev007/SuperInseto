@@ -29,6 +29,20 @@ namespace SuperInseto
         [SerializeField] LayerMask obstructionMask = ~4;
         [SerializeField] MovementState state;
         public MovementState State => state;
+        public bool IsCrouched => crouched;
+        public bool ActionLocked { get; private set; }
+        Vector3 actionVelocity;
+        // An action supplies horizontal motion; this controller still owns collision and gravity.
+        public void SetActionMotion(Vector3 velocity)
+        {
+            ActionLocked = true;
+            actionVelocity = Vector3.ProjectOnPlane(velocity, Vector3.up);
+        }
+        public void ClearActionMotion()
+        {
+            ActionLocked = false;
+            actionVelocity = planarVelocity = Vector3.zero;
+        }
         CharacterController body;
         PlayerInputReader input;
         WallClimber climber;
@@ -56,6 +70,17 @@ namespace SuperInseto
         {
             float dt = Mathf.Min(Time.deltaTime, 0.05f);
             if (dt <= 0f) return;
+            if (ActionLocked)
+            {
+                body.stepOffset = 0f;
+                if (body.isGrounded && verticalVelocity <= 0f) verticalVelocity = -2f;
+                verticalVelocity = Mathf.Max(verticalVelocity - gravity * dt, -terminalSpeed);
+                CollisionFlags actionFlags = body.Move((actionVelocity + Vector3.up * verticalVelocity) * dt);
+                if ((actionFlags & CollisionFlags.Below) != 0) verticalVelocity = -2f;
+                if ((actionFlags & CollisionFlags.Above) != 0 && verticalVelocity > 0f) verticalVelocity = 0f;
+                state = body.isGrounded ? MovementState.Grounded : MovementState.Airborne;
+                return;
+            }
             if (climber.Attached)
             {
                 body.stepOffset = 0f;

@@ -9,6 +9,8 @@ namespace SuperInseto
     {
         InputActionMap map;
         InputAction move, look, sprint, walk, crouch, jump, climb, releaseCursor, captureCursor;
+        InputAction lightAttack, heavyAttack, dodge;
+        int capturedOnFrame = -1;
         public Vector2 Move => Captured ? move.ReadValue<Vector2>() : Vector2.zero;
         public Vector2 Look => Captured ? look.ReadValue<Vector2>() : Vector2.zero;
         public bool Sprint => Captured && sprint.IsPressed();
@@ -20,6 +22,9 @@ namespace SuperInseto
         public bool ClimbPressed => InteractPressed && interactionConsumedFrame != Time.frameCount;
         public void ConsumeInteraction() { interactionConsumedFrame = Time.frameCount; }
         public bool Captured => Cursor.lockState == CursorLockMode.Locked;
+        public bool LightAttackPressed => Captured && capturedOnFrame != Time.frameCount && lightAttack.WasPressedThisFrame();
+        public bool HeavyAttackPressed => Captured && capturedOnFrame != Time.frameCount && heavyAttack.WasPressedThisFrame();
+        public bool DodgePressed => Captured && dodge.WasPressedThisFrame();
 
         void Awake()
         {
@@ -36,6 +41,9 @@ namespace SuperInseto
             climb = map.AddAction("Climb", InputActionType.Button, "<Keyboard>/e");
             releaseCursor = map.AddAction("ReleaseCursor", InputActionType.Button, "<Keyboard>/escape");
             captureCursor = map.AddAction("CaptureCursor", InputActionType.Button, "<Mouse>/leftButton");
+            lightAttack = map.AddAction("LightAttack", InputActionType.Button, "<Mouse>/leftButton");
+            heavyAttack = map.AddAction("HeavyAttack", InputActionType.Button, "<Mouse>/rightButton");
+            dodge = map.AddAction("Dodge", InputActionType.Button, "<Keyboard>/q");
         }
 
         void OnEnable() { map.Enable(); SetCapture(true); }
@@ -44,7 +52,11 @@ namespace SuperInseto
         void Update()
         {
             if (releaseCursor.WasPressedThisFrame()) SetCapture(false);
-            else if (captureCursor.WasPressedThisFrame()) SetCapture(true);
+            else if (captureCursor.WasPressedThisFrame() && !Captured)
+            {
+                capturedOnFrame = Time.frameCount;
+                SetCapture(true);
+            }
         }
         void OnApplicationFocus(bool focused) { if (!focused) SetCapture(false); }
         static void SetCapture(bool capture)

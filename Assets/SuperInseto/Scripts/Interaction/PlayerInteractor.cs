@@ -17,6 +17,7 @@ namespace SuperInseto
         AccessCredentials access;
         WallClimber climber;
         CharacterController body;
+        PlayerMotor motor;
         Interactable target;
         string message;
         float messageUntil;
@@ -28,6 +29,7 @@ namespace SuperInseto
             access = GetComponent<AccessCredentials>();
             climber = GetComponent<WallClimber>();
             body = GetComponent<CharacterController>();
+            motor = GetComponent<PlayerMotor>();
             if (!view) view = Camera.main;
             if (!view) { Debug.LogError("PlayerInteractor requires a camera.", this); enabled = false; }
         }
@@ -35,7 +37,7 @@ namespace SuperInseto
         void Update()
         {
             target = null;
-            if (!input.Captured || (climber && climber.Attached)) return;
+            if (!input.Captured || (climber && climber.Attached) || (motor && motor.ActionLocked)) return;
             Vector3 origin = transform.position + Vector3.up * (body ? body.height * 0.6f : 1f);
             target = probe.Find(origin, view.transform, reach, aimHalfAngle, geometryMask);
             if (!target || !input.InteractPressed) return;
