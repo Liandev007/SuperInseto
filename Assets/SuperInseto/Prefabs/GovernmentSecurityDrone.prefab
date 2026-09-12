@@ -106,9 +106,9 @@ MonoBehaviour:
   rangedDamage: 10
   projectileSpeed: 8
   projectileLifetime: 3
-  attackWindup: 0.75
-  attackRecovery: 0.5
-  attackCooldown: 1
+  attackWindup: 0.65
+  attackRecovery: 0.4
+  attackCooldown: 0.8
 --- !u!114 &1007
 MonoBehaviour:
   m_ObjectHideFlags: 0
