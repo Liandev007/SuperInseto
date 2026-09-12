@@ -11,8 +11,13 @@ namespace SuperInseto
         Camera view;
         float flashUntil;
         Color restingColor;
-        readonly MaterialPropertyBlock block = new MaterialPropertyBlock();
-        void Awake() { health = GetComponent<Health>(); }
+        MaterialPropertyBlock block;
+        void Awake()
+        {
+            health = GetComponent<Health>();
+            // MaterialPropertyBlock creates native Unity state; initialize it during the lifecycle.
+            block = new MaterialPropertyBlock();
+        }
         void OnEnable() { health.Damaged += Hit; health.Died += Die; }
         void OnDisable() { health.Damaged -= Hit; health.Died -= Die; }
         void Start()
