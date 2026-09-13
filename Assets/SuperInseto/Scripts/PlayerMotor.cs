@@ -66,6 +66,17 @@ namespace SuperInseto
             }
         }
 
+        // Called with the CharacterController disabled by the respawn coordinator.
+        public void ResetForRespawn()
+        {
+            climber.Detach(); ClearActionMotion(); verticalVelocity = 0f;
+            crouched = false; body.height = standingHeight;
+            body.center = Vector3.up * (standingHeight * 0.5f);
+            body.stepOffset = standingStep;
+            if (visualRoot) visualRoot.localScale = Vector3.one;
+            state = MovementState.Airborne;
+        }
+
         void Update()
         {
             float dt = Mathf.Min(Time.deltaTime, 0.05f);

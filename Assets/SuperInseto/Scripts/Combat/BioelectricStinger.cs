@@ -127,6 +127,10 @@ namespace SuperInseto
             ownsMotion = false;
             if (active) Finished?.Invoke();
         }
+        public void ResetForRespawn()
+        {
+            Cancel(); readyAt = 0f;
+        }
         void OnDrawGizmosSelected()
         {
             if (!firePoint) return;

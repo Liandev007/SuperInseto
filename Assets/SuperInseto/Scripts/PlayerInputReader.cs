@@ -23,7 +23,20 @@ namespace SuperInseto
         public bool InteractPressed => Captured && climb.WasPressedThisFrame();
         public bool ClimbPressed => InteractPressed && interactionConsumedFrame != Time.frameCount;
         public void ConsumeInteraction() { interactionConsumedFrame = Time.frameCount; }
-        public bool Captured => Cursor.lockState == CursorLockMode.Locked;
+        public bool GameplayBlocked { get; private set; }
+        int resumedOnFrame = -1;
+        public bool Captured => !GameplayBlocked && resumedOnFrame != Time.frameCount
+            && Cursor.lockState == CursorLockMode.Locked;
+        public void BlockGameplay(bool blocked)
+        {
+            GameplayBlocked = blocked;
+            if (!blocked)
+            {
+                // Drop button edges from the respawn frame; keep the existing cursor focus.
+                resumedOnFrame = Time.frameCount;
+                SetCapture(true);
+            }
+        }
         public bool LightAttackPressed => Captured && capturedOnFrame != Time.frameCount && lightAttack.WasPressedThisFrame();
         public bool HeavyAttackPressed => Captured && capturedOnFrame != Time.frameCount && heavyAttack.WasPressedThisFrame();
         public bool DodgePressed => Captured && dodge.WasPressedThisFrame();
@@ -60,7 +73,7 @@ namespace SuperInseto
         void Update()
         {
             if (releaseCursor.WasPressedThisFrame()) SetCapture(false);
-            else if (captureCursor.WasPressedThisFrame() && !Captured)
+            else if (captureCursor.WasPressedThisFrame() && Cursor.lockState != CursorLockMode.Locked)
             {
                 capturedOnFrame = Time.frameCount;
                 SetCapture(true);

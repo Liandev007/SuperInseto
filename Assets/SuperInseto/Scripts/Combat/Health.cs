@@ -28,6 +28,14 @@ namespace SuperInseto
             return true;
         }
 
+        // Explicit lifecycle operation; ordinary Heal still cannot revive dead actors.
+        public void RestoreForRespawn()
+        {
+            Invulnerable = false;
+            currentHealth = maxHealth;
+            Changed?.Invoke(currentHealth);
+        }
+
         public void Heal(float amount)
         {
             if (IsDead || !PositiveFinite(amount)) return;

@@ -140,6 +140,12 @@ namespace SuperInseto
             Action = CombatAction.Dead; motor.SetActionMotion(Vector3.zero);
             ActionStarted?.Invoke(Action, 0);
         }
+        public void ResetForRespawn()
+        {
+            EndAction(); combo.Reset(); ComboStep = 0;
+            elapsed = actionDuration = canDodgeAt = combatClock = 0f;
+            dodgeDirection = Vector3.zero;
+        }
         public void AnimationOpenDamageWindow()
         {
             if (useAnimationEvents && (Action == CombatAction.Light || Action == CombatAction.Heavy)

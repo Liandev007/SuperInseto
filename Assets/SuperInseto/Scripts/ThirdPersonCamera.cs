@@ -34,6 +34,14 @@ namespace SuperInseto
             GetComponent<Camera>().nearClipPlane = 0.05f;
         }
 
+        public void ResetForRespawn()
+        {
+            if (!target) return;
+            yaw = target.eulerAngles.y; pitch = Mathf.Clamp(15f, minPitch, maxPitch);
+            currentDistance = distance;
+            LateUpdate(); // Reuse collision handling immediately at the new target position.
+        }
+
         void Update()
         {
             // Mouse delta is already a per-frame displacement; no deltaTime multiplier.

@@ -95,6 +95,10 @@ namespace SuperInseto
             ownsMotion = false;
             if (active) Finished?.Invoke();
         }
+        public void ResetForRespawn()
+        {
+            Cancel(); readyAt = 0f;
+        }
         void OnDrawGizmosSelected()
         { Gizmos.color = Color.green; Gizmos.DrawWireSphere(Origin, Radius); }
     }

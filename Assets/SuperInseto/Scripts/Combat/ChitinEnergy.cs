@@ -61,6 +61,11 @@ namespace SuperInseto
             if (previous > 0f && currentEnergy == 0f) Depleted?.Invoke();
             if (previous < maxEnergy && currentEnergy == maxEnergy) Full?.Invoke();
         }
+        public void RestoreForRespawn()
+        {
+            delayRemaining = 0f;
+            SetCurrentEnergy(maxEnergy);
+        }
         void Update() { Advance(Time.deltaTime); }
         // Deterministic step also used by focused tests; never creates coroutines or regeneration jobs.
         public void Advance(float deltaTime)
