@@ -7,8 +7,10 @@ namespace SuperInseto
     {
         [SerializeField] PlayerCombat combat;
         [SerializeField] ChitinImpact impact;
+        [SerializeField] BioelectricStinger stinger;
         public void OpenDamageWindow() { if (combat) combat.AnimationOpenDamageWindow(); }
         public void CloseDamageWindow() { if (combat) combat.AnimationCloseDamageWindow(); }
         public void EmitChitinImpact() { if (impact) impact.AnimationImpact(); }
+        public void FireBioelectricStinger() { if (stinger) stinger.AnimationFire(); }
     }
 }

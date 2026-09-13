@@ -3346,6 +3346,8 @@ GameObject:
   - component: {fileID: 2000013}
   - component: {fileID: 2000014}
   - component: {fileID: 2000015}
+  - component: {fileID: 2000016}
+  - component: {fileID: 2000017}
   m_Layer: 2
   m_Name: Player
   m_TagString: Untagged
@@ -3364,6 +3366,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2000501}
+  - {fileID: 2000601}
   - {fileID: 2000401}
   - {fileID: 2000101}
   m_Father: {fileID: 0}
@@ -3399,6 +3402,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chitinImpactBinding: <Keyboard>/r
+  bioelectricStingerBinding: <Keyboard>/f
 --- !u!114 &2000004
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6709,6 +6713,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   combat: {fileID: 2000012}
   impact: {fileID: 2000014}
+  stinger: {fileID: 2000016}
 --- !u!1 &5000000
 GameObject:
   m_ObjectHideFlags: 0
@@ -10271,6 +10276,71 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pulseDuration: 0.3
+--- !u!1 &2000600
+GameObject:
+  m_ObjectHideFlags: 0
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2000601}
+  m_Layer: 2
+  m_Name: BioelectricFirePoint - substituivel
+  m_TagString: Untagged
+  m_IsActive: 1
+--- !u!4 &2000601
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2000600}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.3, y: 1.2, z: 0.6}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2000001}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2000016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2000000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acafa0770dee57dbb01e7a022fd1a9f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  firePoint: {fileID: 2000601}
+  aimCamera: {fileID: 330585545}
+  projectilePrefab: {fileID: 2002, guid: 5d5a4145b90554f7a0b9af6ad948bc51, type: 3}
+  stingerDamage: 25
+  projectileSpeed: 18
+  projectileLifetime: 3
+  projectileRadius: 0.1
+  abilityCooldown: 2.5
+  windup: 0.25
+  recovery: 0.3
+  aimDistance: 45
+  turnSpeed: 540
+  aimMask:
+    serializedVersion: 2
+    m_Bits: 4294967291
+  useAnimationEvents: 0
+--- !u!114 &2000017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2000000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4661b17c9a2950fba42b774d886b0b8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

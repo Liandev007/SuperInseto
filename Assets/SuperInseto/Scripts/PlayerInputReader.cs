@@ -8,9 +8,10 @@ namespace SuperInseto
     public sealed class PlayerInputReader : MonoBehaviour
     {
         [SerializeField] string chitinImpactBinding = "<Keyboard>/r";
+        [SerializeField] string bioelectricStingerBinding = "<Keyboard>/f";
         InputActionMap map;
         InputAction move, look, sprint, walk, crouch, jump, climb, releaseCursor, captureCursor;
-        InputAction lightAttack, heavyAttack, dodge, chitinImpact;
+        InputAction lightAttack, heavyAttack, dodge, chitinImpact, bioelectricStinger;
         int capturedOnFrame = -1;
         public Vector2 Move => Captured ? move.ReadValue<Vector2>() : Vector2.zero;
         public Vector2 Look => Captured ? look.ReadValue<Vector2>() : Vector2.zero;
@@ -28,6 +29,8 @@ namespace SuperInseto
         public bool DodgePressed => Captured && dodge.WasPressedThisFrame();
         public bool ImpactPressed => Captured && capturedOnFrame != Time.frameCount && chitinImpact.WasPressedThisFrame();
         public string ImpactBindingDisplay => chitinImpact.GetBindingDisplayString();
+        public bool StingerPressed => Captured && capturedOnFrame != Time.frameCount && bioelectricStinger.WasPressedThisFrame();
+        public string StingerBindingDisplay => bioelectricStinger.GetBindingDisplayString();
 
         void Awake()
         {
@@ -48,6 +51,7 @@ namespace SuperInseto
             heavyAttack = map.AddAction("HeavyAttack", InputActionType.Button, "<Mouse>/rightButton");
             dodge = map.AddAction("Dodge", InputActionType.Button, "<Keyboard>/q");
             chitinImpact = map.AddAction("ChitinImpact", InputActionType.Button, chitinImpactBinding);
+            bioelectricStinger = map.AddAction("BioelectricStinger", InputActionType.Button, bioelectricStingerBinding);
         }
 
         void OnEnable() { map.Enable(); SetCapture(true); }
