@@ -7,6 +7,11 @@ namespace SuperInseto
         [SerializeField] string accessId = "SecurityLevel01";
         bool collected;
         public override bool Available => base.Available && !collected;
+        public void RestoreCollected(AccessCredentials access)
+        {
+            if (!access || !access.Has(accessId)) return;
+            collected = true; gameObject.SetActive(false);
+        }
         public override string Interact(AccessCredentials access)
         {
             if (collected || !access) return "Cartão indisponível.";

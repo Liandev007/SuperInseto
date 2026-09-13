@@ -10,16 +10,21 @@ namespace SuperInseto
         [SerializeField] DestructibleObject panelPrefab;
         [SerializeField] Transform[] cratePoints;
         [SerializeField] Transform panelPoint;
+        [SerializeField] string[] crateSaveIds = { "m11_crate_a", "m11_crate_b" };
+        [SerializeField] string panelSaveId = "m11_panel";
         void Awake()
         {
             if (!cratePrefab || !panelPrefab || !panelPoint || cratePoints == null || cratePoints.Length != 2)
             { Debug.LogError("M11 gym needs two crate points, a panel point and both prefabs.", this); return; }
-            foreach (var point in cratePoints)
+            for (int i = 0; i < cratePoints.Length; i++)
             {
+                var point = cratePoints[i];
                 if (!point) { Debug.LogError("M11 crate point missing.", this); continue; }
-                Instantiate(cratePrefab, point.position, point.rotation, transform);
+                var crate = Instantiate(cratePrefab, point.position, point.rotation, transform);
+                PersistentId.Assign(crate.gameObject, crateSaveIds != null && i < crateSaveIds.Length ? crateSaveIds[i] : "");
             }
-            Instantiate(panelPrefab, panelPoint.position, panelPoint.rotation, transform);
+            var panel = Instantiate(panelPrefab, panelPoint.position, panelPoint.rotation, transform);
+            PersistentId.Assign(panel.gameObject, panelSaveId);
         }
         void OnDrawGizmosSelected()
         {

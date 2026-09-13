@@ -35,6 +35,11 @@ namespace SuperInseto
         void Start() { started = true; if (health.IsDead) Break(); }
         void OnDisable() { health.Damaged -= Hit; health.Died -= Break; }
         void Hit(DamageInfo damage) { if (!isDestroyed) Damaged?.Invoke(damage); }
+        // Binary persistence only. Reuses Health/death and the existing collider/puzzle consequences.
+        public void RestoreDestroyed()
+        {
+            if (!isDestroyed) health.TakeDamage(health.MaxHealth);
+        }
         void Break()
         {
             if (isDestroyed) return;

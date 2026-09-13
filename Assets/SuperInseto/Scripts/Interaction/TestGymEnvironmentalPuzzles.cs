@@ -15,6 +15,9 @@ namespace SuperInseto
         [SerializeField] Transform player;
         [SerializeField] Vector3 feedbackCenter = new Vector3(-17f, 2f, 5f);
         [SerializeField] Vector3 feedbackSize = new Vector3(10f, 6f, 14f);
+        [SerializeField] string panelSaveId = "m12_sabotage_panel";
+        [SerializeField] string nodeASaveId = "m12_node_a";
+        [SerializeField] string nodeBSaveId = "m12_node_b";
         EnvironmentalPuzzle sabotage, circuit;
         void Awake()
         {
@@ -24,6 +27,9 @@ namespace SuperInseto
             panel.name = "M12 - painel de sabotagem - 80 HP";
             var a = Instantiate(receiverPrefab, nodeA.position, nodeA.rotation, transform); a.name = "Bioelectric Node A";
             var b = Instantiate(receiverPrefab, nodeB.position, nodeB.rotation, transform); b.name = "Bioelectric Node B";
+            PersistentId.Assign(panel.gameObject, panelSaveId);
+            PersistentId.Assign(a.gameObject, nodeASaveId);
+            PersistentId.Assign(b.gameObject, nodeBSaveId);
             sabotage = NewPuzzle("Puzzle A - destruir painel");
             sabotage.Configure(new[] { panel }, null, () => { if (barrier) barrier.SetActive(false); });
             sabotage.gameObject.SetActive(true);

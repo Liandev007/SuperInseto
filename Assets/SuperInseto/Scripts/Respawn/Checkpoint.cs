@@ -5,6 +5,8 @@ namespace SuperInseto
     [RequireComponent(typeof(BoxCollider), typeof(Rigidbody))]
     public sealed class Checkpoint : MonoBehaviour
     {
+        [SerializeField] string persistentId;
+        public string PersistentId => persistentId;
         [SerializeField, Min(0)] int progressIndex;
         [SerializeField] Transform spawnPoint;
         [SerializeField] Renderer marker;

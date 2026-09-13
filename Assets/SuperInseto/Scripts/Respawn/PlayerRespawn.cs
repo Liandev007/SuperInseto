@@ -88,7 +88,23 @@ namespace SuperInseto
                 if (health.IsDead) BeginDeath(); // Also catches a death while this component was disabled.
                 return;
             }
-            if (state == RespawnState.Dead && Time.time >= respawnAt) TryRespawn();
+            if (Time.time >= respawnAt) TryRespawn();
+        }
+        // Startup load uses the same safe placement and cleanup as death, without a death event/delay.
+        public void RestoreCheckpointForLoad(Checkpoint checkpoint)
+        {
+            if (state != RespawnState.Alive) return;
+            if (currentCheckpoint) currentCheckpoint.SetActiveCheckpoint(false);
+            currentCheckpoint = checkpoint ? checkpoint : initialCheckpoint;
+            if (currentCheckpoint) currentCheckpoint.SetActiveCheckpoint(true);
+            state = RespawnState.Respawning;
+            input.BlockGameplay(true);
+            motorWasEnabled = motor.enabled;
+            motor.SetActionMotion(Vector3.zero); motor.enabled = false;
+            climber.Detach();
+            if (impact) impact.Cancel();
+            if (stinger) stinger.Cancel();
+            TryRespawn();
         }
         void TryRespawn()
         {
