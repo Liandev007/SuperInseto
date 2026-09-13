@@ -42,6 +42,8 @@ namespace SuperInseto
                 Flying = false; // Latch before callbacks, including death/disabling the target.
                 transform.position = point;
                 Destroy(gameObject, Mathf.Max(0f, impactFlashDuration));
+                // Dedicated electrical signal: melee, radial damage and enemy projectiles never send this.
+                if (hit) hit.GetComponentInParent<IBioelectricReceiver>()?.ReceiveBioelectricImpact();
                 var receiver = hit && (damageMask.value & (1 << hit.gameObject.layer)) != 0
                     ? hit.GetComponentInParent<IDamageable>() : null;
                 bool damaged = receiver != null && !ReferenceEquals(receiver, ownerReceiver)
