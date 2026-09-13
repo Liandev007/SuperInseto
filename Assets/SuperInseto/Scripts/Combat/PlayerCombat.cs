@@ -60,6 +60,9 @@ namespace SuperInseto
             && !input.Crouch && !climber.Attached && !health.IsDead && input.Captured
             && !input.JumpPressed && !input.InteractPressed;
 
+        // Abilities may acquire the existing motion lock only while normal combat is idle.
+        public bool CanStartAbility => isActiveAndEnabled && Action == CombatAction.Idle && CanStart && !motor.ActionLocked;
+
         void Update()
         {
             float dt = Mathf.Min(Time.deltaTime, 0.05f);
@@ -73,7 +76,7 @@ namespace SuperInseto
                 EndAction();
                 if (chain) StartAttack(false);
             }
-            if (Action == CombatAction.Idle && CanStart)
+            if (Action == CombatAction.Idle && CanStart && !motor.ActionLocked)
             {
                 if (input.DodgePressed && combatClock >= canDodgeAt) StartDodge();
                 else if (input.HeavyAttackPressed) StartAttack(true);

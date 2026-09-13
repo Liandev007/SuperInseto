@@ -3344,6 +3344,8 @@ GameObject:
   - component: {fileID: 2000011}
   - component: {fileID: 2000012}
   - component: {fileID: 2000013}
+  - component: {fileID: 2000014}
+  - component: {fileID: 2000015}
   m_Layer: 2
   m_Name: Player
   m_TagString: Untagged
@@ -3361,6 +3363,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 2000501}
   - {fileID: 2000401}
   - {fileID: 2000101}
   m_Father: {fileID: 0}
@@ -3395,6 +3398,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e099903ac1e2514cae94c502a217a959, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  chitinImpactBinding: <Keyboard>/r
 --- !u!114 &2000004
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6704,6 +6708,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   combat: {fileID: 2000012}
+  impact: {fileID: 2000014}
 --- !u!1 &5000000
 GameObject:
   m_ObjectHideFlags: 0
@@ -10203,6 +10208,69 @@ MonoBehaviour:
   - {fileID: 8003013}
   - {fileID: 8003023}
   - {fileID: 8003033}
+--- !u!1 &2000500
+GameObject:
+  m_ObjectHideFlags: 0
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2000501}
+  m_Layer: 2
+  m_Name: ChitinImpactOrigin - substituivel
+  m_TagString: Untagged
+  m_IsActive: 1
+--- !u!4 &2000501
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2000500}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.9, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2000001}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2000014
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2000000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 430c9513c77752d3879557e54e45396d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  impactOrigin: {fileID: 2000501}
+  impactDamage: 35
+  impactRadius: 3
+  impactCooldown: 5
+  impactWindup: 0.5
+  impactRecovery: 0.5
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 4294967291
+  obstructionMask:
+    serializedVersion: 2
+    m_Bits: 4294967035
+  useAnimationEvents: 0
+--- !u!114 &2000015
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2000000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fba14cc41455e8bb0789752315183e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pulseDuration: 0.3
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

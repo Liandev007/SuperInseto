@@ -7,9 +7,10 @@ namespace SuperInseto
     [DefaultExecutionOrder(-200)]
     public sealed class PlayerInputReader : MonoBehaviour
     {
+        [SerializeField] string chitinImpactBinding = "<Keyboard>/r";
         InputActionMap map;
         InputAction move, look, sprint, walk, crouch, jump, climb, releaseCursor, captureCursor;
-        InputAction lightAttack, heavyAttack, dodge;
+        InputAction lightAttack, heavyAttack, dodge, chitinImpact;
         int capturedOnFrame = -1;
         public Vector2 Move => Captured ? move.ReadValue<Vector2>() : Vector2.zero;
         public Vector2 Look => Captured ? look.ReadValue<Vector2>() : Vector2.zero;
@@ -25,6 +26,8 @@ namespace SuperInseto
         public bool LightAttackPressed => Captured && capturedOnFrame != Time.frameCount && lightAttack.WasPressedThisFrame();
         public bool HeavyAttackPressed => Captured && capturedOnFrame != Time.frameCount && heavyAttack.WasPressedThisFrame();
         public bool DodgePressed => Captured && dodge.WasPressedThisFrame();
+        public bool ImpactPressed => Captured && capturedOnFrame != Time.frameCount && chitinImpact.WasPressedThisFrame();
+        public string ImpactBindingDisplay => chitinImpact.GetBindingDisplayString();
 
         void Awake()
         {
@@ -44,6 +47,7 @@ namespace SuperInseto
             lightAttack = map.AddAction("LightAttack", InputActionType.Button, "<Mouse>/leftButton");
             heavyAttack = map.AddAction("HeavyAttack", InputActionType.Button, "<Mouse>/rightButton");
             dodge = map.AddAction("Dodge", InputActionType.Button, "<Keyboard>/q");
+            chitinImpact = map.AddAction("ChitinImpact", InputActionType.Button, chitinImpactBinding);
         }
 
         void OnEnable() { map.Enable(); SetCapture(true); }

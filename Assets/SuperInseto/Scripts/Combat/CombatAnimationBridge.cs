@@ -6,7 +6,9 @@ namespace SuperInseto
     public sealed class CombatAnimationBridge : MonoBehaviour
     {
         [SerializeField] PlayerCombat combat;
+        [SerializeField] ChitinImpact impact;
         public void OpenDamageWindow() { if (combat) combat.AnimationOpenDamageWindow(); }
         public void CloseDamageWindow() { if (combat) combat.AnimationCloseDamageWindow(); }
+        public void EmitChitinImpact() { if (impact) impact.AnimationImpact(); }
     }
 }
