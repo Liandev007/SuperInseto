@@ -170,6 +170,8 @@ namespace SuperInseto.Tests
             yield return WaitForEnd(ability);
             Assert.That(shots, Is.EqualTo(2)); Assert.That(motor.ActionLocked, Is.False);
             ability.AnimationFire(); Assert.That(ability.Active, Is.False);
+            // This M9 test isolates action exclusion; resource consumption has dedicated M10 tests.
+            ability.GetComponent<ChitinEnergy>().SetCurrentEnergy(100f);
             Assert.That(impact.TryActivate(), Is.True); impact.Cancel();
         }
 

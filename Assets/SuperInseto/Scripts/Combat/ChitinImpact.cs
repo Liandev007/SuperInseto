@@ -5,10 +5,11 @@ namespace SuperInseto
 {
     // Normal combat resolves simultaneous mouse/Q input first; this runs before interaction and locomotion.
     [DefaultExecutionOrder(-70)]
-    [RequireComponent(typeof(PlayerCombat))]
+    [RequireComponent(typeof(PlayerCombat), typeof(ChitinEnergy))]
     public sealed class ChitinImpact : MonoBehaviour
     {
         [SerializeField] Transform impactOrigin;
+        [SerializeField, Min(0f)] float energyCost = 35f;
         [SerializeField, Min(1f)] float impactDamage = 35f;
         [SerializeField, Min(0.1f)] float impactRadius = 3f;
         [Tooltip("Seconds from activation. Cancellation does not refund the cooldown.")]
@@ -27,6 +28,7 @@ namespace SuperInseto
         WallClimber climber;
         CharacterController body;
         Health health;
+        ChitinEnergy energy;
         float startedAt, impactedAt, readyAt;
         bool emitted, ownsMotion;
         public bool Active { get; private set; }
@@ -46,6 +48,7 @@ namespace SuperInseto
             combat = GetComponent<PlayerCombat>(); motor = GetComponent<PlayerMotor>();
             input = GetComponent<PlayerInputReader>(); climber = GetComponent<WallClimber>();
             body = GetComponent<CharacterController>(); health = GetComponent<Health>();
+            energy = GetComponent<ChitinEnergy>();
         }
         void OnEnable() { health.Died += Cancel; }
         void OnDisable() { health.Died -= Cancel; Cancel(); }
@@ -54,6 +57,7 @@ namespace SuperInseto
         {
             if (!isActiveAndEnabled || Active || CooldownRemaining > 0f || !combat.CanStartAbility
                 || climber.Mantling) return false;
+            if (!energy.TrySpend(energyCost)) return false;
             Active = true; emitted = false; startedAt = Time.time;
             readyAt = startedAt + Mathf.Max(0.1f, impactCooldown);
             ownsMotion = true; motor.SetActionMotion(Vector3.zero);

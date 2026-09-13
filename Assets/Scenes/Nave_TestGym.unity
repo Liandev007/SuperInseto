@@ -3348,6 +3348,8 @@ GameObject:
   - component: {fileID: 2000015}
   - component: {fileID: 2000016}
   - component: {fileID: 2000017}
+  - component: {fileID: 2000018}
+  - component: {fileID: 2000019}
   m_Layer: 2
   m_Name: Player
   m_TagString: Untagged
@@ -10251,6 +10253,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   impactOrigin: {fileID: 2000501}
+  energyCost: 35
   impactDamage: 35
   impactRadius: 3
   impactCooldown: 5
@@ -10316,6 +10319,7 @@ MonoBehaviour:
   firePoint: {fileID: 2000601}
   aimCamera: {fileID: 330585545}
   projectilePrefab: {fileID: 2002, guid: 5d5a4145b90554f7a0b9af6ad948bc51, type: 3}
+  energyCost: 20
   stingerDamage: 25
   projectileSpeed: 18
   projectileLifetime: 3
@@ -10341,6 +10345,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4661b17c9a2950fba42b774d886b0b8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2000018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2000000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5048fc5f6fe053029b52ef3c7ede2c65, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxEnergy: 100
+  startingEnergy: 100
+  regenerationRate: 15
+  regenerationDelay: 1.5
+  currentEnergy: 100
+--- !u!114 &2000019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2000000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03331a96772954b2b0c8f55aa7243785, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  insufficientDisplayTime: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

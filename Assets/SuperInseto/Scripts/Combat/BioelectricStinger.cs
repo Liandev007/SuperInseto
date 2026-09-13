@@ -5,10 +5,11 @@ namespace SuperInseto
 {
     // Normal combat (-75) and Impact (-70) resolve first. The shared motor lock excludes concurrent actions.
     [DefaultExecutionOrder(-65)]
-    [RequireComponent(typeof(PlayerCombat))]
+    [RequireComponent(typeof(PlayerCombat), typeof(ChitinEnergy))]
     public sealed class BioelectricStinger : MonoBehaviour
     {
         [SerializeField] Transform firePoint;
+        [SerializeField, Min(0f)] float energyCost = 20f;
         [SerializeField] Camera aimCamera;
         [SerializeField] BioelectricProjectile projectilePrefab;
         [SerializeField, Min(1f)] float stingerDamage = 25f;
@@ -31,6 +32,7 @@ namespace SuperInseto
         WallClimber climber;
         CharacterController body;
         Health health;
+        ChitinEnergy energy;
         float startedAt, shotAt, readyAt;
         bool resolved, fireRequested, ownsMotion;
         public bool Active { get; private set; }
@@ -51,6 +53,7 @@ namespace SuperInseto
             combat = GetComponent<PlayerCombat>(); motor = GetComponent<PlayerMotor>();
             input = GetComponent<PlayerInputReader>(); climber = GetComponent<WallClimber>();
             body = GetComponent<CharacterController>(); health = GetComponent<Health>();
+            energy = GetComponent<ChitinEnergy>();
             if (!aimCamera) aimCamera = Camera.main;
         }
         void OnEnable() { health.Died += Cancel; }
@@ -60,6 +63,7 @@ namespace SuperInseto
         {
             if (!isActiveAndEnabled || Active || CooldownRemaining > 0f || !combat.CanStartAbility
                 || climber.Mantling || !firePoint || !aimCamera || !projectilePrefab) return false;
+            if (!energy.TrySpend(energyCost)) return false;
             Active = true; resolved = false; fireRequested = false; startedAt = Time.time;
             ownsMotion = true; motor.SetActionMotion(Vector3.zero);
             PreparationStarted?.Invoke();
