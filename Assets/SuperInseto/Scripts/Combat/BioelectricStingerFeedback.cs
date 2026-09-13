@@ -44,10 +44,11 @@ namespace SuperInseto
             ring.enabled = !health.IsDead && socket && (ability.WindingUp || flash);
             if (!ring.enabled) return;
             float radius = flash ? 0.24f : Mathf.Lerp(0.06f, 0.16f, ability.WindupProgress);
+            Vector3 center = ability.CastPosition;
             for (int i = 0; i < points.Length; i++)
             {
                 float angle = i * Mathf.PI * 2f / points.Length;
-                points[i] = socket.position + (socket.right * Mathf.Cos(angle) + socket.up * Mathf.Sin(angle)) * radius;
+                points[i] = center + (socket.right * Mathf.Cos(angle) + socket.up * Mathf.Sin(angle)) * radius;
             }
             ring.SetPositions(points);
         }

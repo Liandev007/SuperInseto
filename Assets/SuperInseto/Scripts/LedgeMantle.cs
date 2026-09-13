@@ -18,6 +18,7 @@ namespace SuperInseto
         Vector3 start, raised, landing;
         float elapsed;
         public bool Active { get; private set; }
+        public float Progress => Active ? Mathf.Clamp01(elapsed / Mathf.Max(0.2f, duration)) : 0f;
 
         void Awake() { body = GetComponent<CharacterController>(); }
 

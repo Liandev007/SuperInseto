@@ -1,0 +1,146 @@
+{
+  "archiveReceived": "Player(4).rar",
+  "archiveNameInSpecification": "Player(2).rar",
+  "files": [
+    {
+      "file": "LightAttack03.fbx",
+      "bytes": 361920,
+      "sha256": "7d52baf7732f050a4bb9c18a516711c377bd5b15bfc84d7f7e9c0ec3e7696e06",
+      "addedToProject": true,
+      "destination": "Assets/SuperInseto/Characters/Player/Animations/LightAttack03.fbx"
+    },
+    {
+      "file": "Mantle.fbx",
+      "bytes": 658752,
+      "sha256": "a61abd85b09821de3239495772204efebd6a518d309874b5ca7e24d92f72f6a8",
+      "addedToProject": true,
+      "destination": "Assets/SuperInseto/Characters/Player/Animations/Mantle.fbx"
+    },
+    {
+      "file": "Player.fbx",
+      "bytes": 339724,
+      "sha256": "f854a94b05ff69dc3d8ac558f4a7fbaf539eb27a93846522e28b0f39a0550848",
+      "addedToProject": false,
+      "destination": null
+    },
+    {
+      "file": "Run.fbx",
+      "bytes": 343600,
+      "sha256": "3415a37b6adb4b74be4082616791eb63a982a62ba3cdd777d573dc2fb3ad7707",
+      "addedToProject": true,
+      "destination": "Assets/SuperInseto/Characters/Player/Animations/Run.fbx"
+    },
+    {
+      "file": "Texture.png",
+      "bytes": 2541237,
+      "sha256": "ec53328b6749aae103b532194e47b7302840e4b6a989171416b887e344a426b6",
+      "addedToProject": true,
+      "destination": "Assets/SuperInseto/Characters/Player/Model/Texture.png"
+    },
+    {
+      "file": "T-Pose.fbx",
+      "bytes": 763808,
+      "sha256": "41d6526d0dc9b9be02e895819796bae4c009163e16624c20aa656a932454cfb0",
+      "addedToProject": true,
+      "destination": "Assets/SuperInseto/Characters/Player/Model/T-Pose.fbx"
+    },
+    {
+      "file": "Walk.fbx",
+      "bytes": 376976,
+      "sha256": "68f9445202a91e65b508a488872a87b43dd6e59eb4be6e73e7d4b2999391943b",
+      "addedToProject": true,
+      "destination": "Assets/SuperInseto/Characters/Player/Animations/Walk.fbx"
+    },
+    {
+      "file": "BioletricStinger.fbx",
+      "bytes": 417008,
+      "sha256": "e460e0c5ff55c8ac10024914b30830cde6da8086d4ad90496f0f46a08d68f5a9",
+      "addedToProject": true,
+      "destination": "Assets/SuperInseto/Characters/Player/Animations/BioletricStinger.fbx"
+    },
+    {
+      "file": "ChitingImpact.fbx",
+      "bytes": 399728,
+      "sha256": "1bf171bd8ad446beca50b1216482de8ab7d964749f81f464a756b09fe2d65754",
+      "addedToProject": true,
+      "destination": "Assets/SuperInseto/Characters/Player/Animations/ChitingImpact.fbx"
+    },
+    {
+      "file": "Climb.fbx",
+      "bytes": 491168,
+      "sha256": "2a98929cb0dd07a3846baf6957ae7898ae7017fa344ac5d08cddb71955406f77",
+      "addedToProject": true,
+      "destination": "Assets/SuperInseto/Characters/Player/Animations/Climb.fbx"
+    },
+    {
+      "file": "Death.fbx",
+      "bytes": 577920,
+      "sha256": "29e4cb701c083f1d1545da1b40f2fd5b67cdd6a8da57b8223a89a4bbce030f4f",
+      "addedToProject": true,
+      "destination": "Assets/SuperInseto/Characters/Player/Animations/Death.fbx"
+    },
+    {
+      "file": "Dodge.fbx",
+      "bytes": 359232,
+      "sha256": "4fa3e27c236b1ab60e92223b47cbdf157cdbc9402bb7224a2c900a9058bd5547",
+      "addedToProject": true,
+      "destination": "Assets/SuperInseto/Characters/Player/Animations/Dodge.fbx"
+    },
+    {
+      "file": "Fall.fbx",
+      "bytes": 368016,
+      "sha256": "6bab403fbc0da36274a2b3da4949183f6d50de01b8bed802522e5d06f4cf45ef",
+      "addedToProject": true,
+      "destination": "Assets/SuperInseto/Characters/Player/Animations/Fall.fbx"
+    },
+    {
+      "file": "Floating.fbx",
+      "bytes": 510464,
+      "sha256": "0dbc12e955c30669da1ccd8f28f849961a4d85ceb8f1fc6c823f14baa9d03b63",
+      "addedToProject": true,
+      "destination": "Assets/SuperInseto/Characters/Player/Animations/Floating.fbx"
+    },
+    {
+      "file": "HeavyAttack.fbx",
+      "bytes": 390544,
+      "sha256": "c5aafdfb06402d3cfde93dddee56e6f1e1140e8150aae8574b61c00ee72509b8",
+      "addedToProject": true,
+      "destination": "Assets/SuperInseto/Characters/Player/Animations/HeavyAttack.fbx"
+    },
+    {
+      "file": "HitReaction.fbx",
+      "bytes": 326832,
+      "sha256": "ed9b14880d4cd60da26a5880a81a53afddbdcc9f35bc8f24d9ef8ec5da6ac9d7",
+      "addedToProject": true,
+      "destination": "Assets/SuperInseto/Characters/Player/Animations/HitReaction.fbx"
+    },
+    {
+      "file": "Idle.fbx",
+      "bytes": 463808,
+      "sha256": "15fd3ab4d7f5fbcdda2e1f74e86e3b1ad5e445dbc33f14f5eb2f35d55e47c283",
+      "addedToProject": true,
+      "destination": "Assets/SuperInseto/Characters/Player/Animations/Idle.fbx"
+    },
+    {
+      "file": "Jump.fbx",
+      "bytes": 456960,
+      "sha256": "4b77d1a643c9403ae3aa1aad5fd7192b7f0563418cdaea6db4f89b2da106e78c",
+      "addedToProject": true,
+      "destination": "Assets/SuperInseto/Characters/Player/Animations/Jump.fbx"
+    },
+    {
+      "file": "LightAtack01.fbx",
+      "bytes": 332224,
+      "sha256": "8be5a489161a8c8ec0a71f049bf05992e8513abca5b36bd0f6d92589ad24d625",
+      "addedToProject": true,
+      "destination": "Assets/SuperInseto/Characters/Player/Animations/LightAtack01.fbx"
+    },
+    {
+      "file": "LightAttack02.fbx",
+      "bytes": 374960,
+      "sha256": "bc3fe67bf793120228e4acfe2ac43cde947cd51b57646cdbcf0dd21d8c56c5f1",
+      "addedToProject": true,
+      "destination": "Assets/SuperInseto/Characters/Player/Animations/LightAttack02.fbx"
+    }
+  ]
+}

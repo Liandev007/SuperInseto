@@ -33,6 +33,7 @@ namespace SuperInseto
         bool motorWasEnabled;
         readonly Collider[] overlaps = new Collider[32];
         public RespawnState State => state;
+        public float Delay => Mathf.Max(0.1f, respawnDelay);
         public Checkpoint CurrentCheckpoint => currentCheckpoint;
         public Vector3 CheckpointPosition => currentCheckpoint ? currentCheckpoint.Position : initialPosition;
         public event Action DeathStarted;

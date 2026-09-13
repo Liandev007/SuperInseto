@@ -29,6 +29,10 @@ namespace SuperInseto
         public CombatAction Action { get; private set; }
         public int ComboStep { get; private set; }
         public float ActionProgress => actionDuration > 0f ? Mathf.Clamp01(elapsed / actionDuration) : 0f;
+        public float ActionElapsed => elapsed;
+        public float ActionDuration => actionDuration;
+        public Vector2 DamageWindow => Action == CombatAction.Heavy ? heavyDamageWindow : lightDamageWindow;
+        public Vector3 DodgeDirection => dodgeDirection;
         public event System.Action<CombatAction, int> ActionStarted;
         public event System.Action ActionEnded;
         readonly LightCombo combo = new LightCombo();
@@ -41,6 +45,30 @@ namespace SuperInseto
         float elapsed, actionDuration, canDodgeAt, combatClock;
         Vector3 dodgeDirection;
         bool queuedLight;
+        bool presentationCommit;
+        float lightMoveMultiplier, heavyMoveMultiplier, lightBrakeDuration, heavyBrakeDuration;
+        Vector3 attackEntryVelocity;
+
+        // Opt-in only after a valid visual is installed. Original M3 fixtures keep their hard stop.
+        // The existing action lock, controller, attack clocks and hit windows remain authoritative.
+        public void ConfigurePresentationCommit(bool enabled, float lightMultiplier = 0.35f,
+            float heavyMultiplier = 0.1f, float lightBrake = 0.08f, float heavyBrake = 0.05f)
+        {
+            presentationCommit = enabled;
+            lightMoveMultiplier = Mathf.Clamp01(lightMultiplier);
+            heavyMoveMultiplier = Mathf.Clamp01(heavyMultiplier);
+            lightBrakeDuration = Mathf.Max(0.001f, lightBrake);
+            heavyBrakeDuration = Mathf.Max(0.001f, heavyBrake);
+        }
+
+        Vector3 AttackCommitMotion()
+        {
+            if (!presentationCommit) return Vector3.zero;
+            bool heavy = Action == CombatAction.Heavy;
+            float brake = heavy ? heavyBrakeDuration : lightBrakeDuration;
+            float multiplier = heavy ? heavyMoveMultiplier : lightMoveMultiplier;
+            return attackEntryVelocity * multiplier * (1f - Mathf.Clamp01(elapsed / brake));
+        }
 
         void Awake()
         {
@@ -93,7 +121,7 @@ namespace SuperInseto
                     && elapsed < Mathf.Min(actionDuration, invulnerabilityStart + invulnerabilityDuration);
                 return;
             }
-            motor.SetActionMotion(Vector3.zero);
+            motor.SetActionMotion(AttackCommitMotion());
             if (Action == CombatAction.Light && ComboStep < 3 && input.LightAttackPressed
                 && previous >= Mathf.Max(lightDamageWindow.x, actionDuration - comboWindow)) queuedLight = true;
             if (!useAnimationEvents)
@@ -107,6 +135,7 @@ namespace SuperInseto
 
         void StartAttack(bool heavy)
         {
+            attackEntryVelocity = motor.ActualPlanarVelocity;
             Action = heavy ? CombatAction.Heavy : CombatAction.Light;
             actionDuration = Mathf.Max(0.1f, heavy ? heavyAttackCooldown : lightAttackCooldown);
             elapsed = 0f; queuedLight = false;
@@ -130,7 +159,7 @@ namespace SuperInseto
         void EndAction()
         {
             hitbox.EndSwing(); health.Invulnerable = false;
-            motor.ClearActionMotion(); queuedLight = false;
+            motor.ClearActionMotion(); queuedLight = false; attackEntryVelocity = Vector3.zero;
             Action = CombatAction.Idle;
             ActionEnded?.Invoke();
         }

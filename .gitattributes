@@ -1,2 +1,6 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# Preserve the supplied M14.5 source assets byte-for-byte.
+Assets/SuperInseto/Characters/Player/**/*.fbx binary
+Assets/SuperInseto/Characters/Player/**/*.png binary

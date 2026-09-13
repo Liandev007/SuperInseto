@@ -12,6 +12,12 @@ namespace SuperInseto
         MeleeHitbox hitbox;
         Quaternion restingRotation;
         float hitUntil, hitDamage;
+        bool animatedVisual;
+        public void SetAnimatedVisual(bool value)
+        {
+            animatedVisual = value;
+            if (visualRoot) visualRoot.localRotation = restingRotation;
+        }
         void Awake()
         {
             combat = GetComponent<PlayerCombat>(); health = GetComponent<Health>(); hitbox = GetComponent<MeleeHitbox>();
@@ -26,7 +32,7 @@ namespace SuperInseto
         void Hit(float amount) { hitDamage = amount; hitUntil = Time.unscaledTime + 0.8f; }
         void LateUpdate()
         {
-            if (!visualRoot) return;
+            if (!visualRoot || animatedVisual) return;
             float pulse = Mathf.Sin(combat.ActionProgress * Mathf.PI);
             Vector3 angles = Vector3.zero;
             if (combat.Action == CombatAction.Light) angles.y = pulse * (combat.ComboStep % 2 == 0 ? -25f : 25f);

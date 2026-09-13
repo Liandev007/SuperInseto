@@ -35,12 +35,18 @@ namespace SuperInseto
         ChitinEnergy energy;
         float startedAt, shotAt, readyAt;
         bool resolved, fireRequested, ownsMotion;
+        BioelectricCastOrigin animatedCastOrigin;
         public bool Active { get; private set; }
         public bool WindingUp => Active && !resolved;
         public Transform FirePoint => firePoint;
+        public void SetAnimatedCastOrigin(BioelectricCastOrigin value) { animatedCastOrigin = value; }
+        public Vector3 CastPosition => animatedCastOrigin && animatedCastOrigin.isActiveAndEnabled
+            && animatedCastOrigin.TryGetPosition(out var position) ? position
+            : firePoint ? firePoint.position : transform.position;
         public Vector3 AimPoint { get; private set; }
         public float CooldownRemaining => Mathf.Max(0f, readyAt - Time.time);
         public float WindupProgress => WindingUp ? Mathf.Clamp01((Time.time - startedAt) / Windup) : 0f;
+        public float RecoveryProgress => Active && resolved ? Mathf.Clamp01((Time.time - shotAt) / Recovery) : 0f;
         public event Action PreparationStarted;
         public event Action<BioelectricProjectile> Fired;
         public event Action<Vector3> Blocked;
@@ -102,7 +108,8 @@ namespace SuperInseto
             if (!WindingUp || !CanContinue) return;
             resolved = true; fireRequested = false; shotAt = Time.time;
             readyAt = shotAt + Mathf.Max(0.1f, abilityCooldown);
-            Vector3 origin = firePoint.position;
+            // Resolve after this frame's camera-facing rotation and Animator evaluation.
+            Vector3 origin = CastPosition;
             Vector3 heading = AimPoint - origin;
             // Check from inside the body to the socket: never spawn beyond a wall crossed by the arm.
             if (!validAim || heading.sqrMagnitude < 0.0001f

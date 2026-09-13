@@ -37,6 +37,7 @@ namespace SuperInseto
         public Vector3 Origin => impactOrigin ? impactOrigin.position : body ? body.bounds.center : transform.position;
         public float CooldownRemaining => Mathf.Max(0f, readyAt - Time.time);
         public float WindupProgress => WindingUp ? Mathf.Clamp01((Time.time - startedAt) / Windup) : 0f;
+        public float RecoveryProgress => Active && emitted ? Mathf.Clamp01((Time.time - impactedAt) / Recovery) : 0f;
         public event Action PreparationStarted;
         public event Action<Vector3, float, int> Impacted;
         public event Action Finished;

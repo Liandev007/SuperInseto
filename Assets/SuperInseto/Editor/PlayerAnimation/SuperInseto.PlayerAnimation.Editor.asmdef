@@ -1,0 +1,7 @@
+{
+  "name": "SuperInseto.PlayerAnimation.Editor",
+  "rootNamespace": "SuperInseto.Editor",
+  "references": ["SuperInseto.Movement"],
+  "includePlatforms": ["Editor"],
+  "autoReferenced": true
+}

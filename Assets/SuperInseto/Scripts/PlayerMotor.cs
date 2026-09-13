@@ -30,6 +30,13 @@ namespace SuperInseto
         [SerializeField] MovementState state;
         public MovementState State => state;
         public bool IsCrouched => crouched;
+        // Read-only presentation telemetry. Animation never supplies a controller displacement.
+        public bool IsGrounded => body && body.enabled && body.isGrounded;
+        public Vector3 ActualVelocity => body && body.enabled ? body.velocity : Vector3.zero;
+        public Vector3 ActualPlanarVelocity => Vector3.ProjectOnPlane(ActualVelocity, Vector3.up);
+        public float VerticalVelocity => verticalVelocity;
+        public float RunSpeed => runSpeed;
+        public float SprintSpeed => sprintSpeed;
         public bool ActionLocked { get; private set; }
         Vector3 actionVelocity;
         // An action supplies horizontal motion; this controller still owns collision and gravity.
